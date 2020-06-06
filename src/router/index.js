@@ -1,6 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import NotFound from "../views/404.vue";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+
+// import user_layout from "../layouts/UserLayout.vue";
 
 Vue.use(VueRouter);
 
@@ -8,16 +12,145 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    redirect: "/dashboard"
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: "/dashboard",
+    name: "dashboard",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+      import(/* webpackChunkName: "layout" */ "../layouts/BasicLayout.vue"),
+    children: [
+      {
+        path: "/dashboard/workplace",
+        name: "workplace",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ "../views/Dashboard/Workplace.vue"
+          )
+      },
+      {
+        path: "/dashboard/monitor",
+        name: "moniter",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ "../views/Dashboard/Monitor.vue"
+          )
+      },
+      {
+        path: "/dashboard/analysis",
+        name: "moniter",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ "../views/Dashboard/Analysis.vue"
+          )
+      },
+      {
+        path: "/dashboard/test_work",
+        name: "test_work",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ "../views/Dashboard/TestWork.vue"
+          )
+      },
+      {
+        path: "/dashboard",
+        redirect: "/dashboard/monitor"
+      }
+    ]
+  },
+  {
+    path: "/form",
+    name: "form",
+    component: () => import(/* webpackChunkName: "layout" */ "../layouts/BasicLayout.vue"),
+    // component: { render: h => h("router-view") },
+    children: [
+      {
+        path: "/form",
+        redirect: "/form/basic_form"
+      },
+      {
+        path: "/form/basic_form",
+        name: "basic_form",
+        component: () =>
+          import(/* webpackChunkName: "form" */ "../views/Form/BasicForm.vue")
+      },
+      {
+        path: "/form/advanced_form",
+        name: "advanced_form",
+        component: () =>
+          import(
+            /* webpackChunkName: "form" */ "../views/Form/AdvancedForm.vue"
+          )
+      },
+      {
+        path: "/form/step_form", // 分步表单
+        name: "step_form",
+        component: () =>
+          import(/* webpackChunkName: "form" */ "../views/Form/StepForm"),
+        children: [
+          {
+            path: "/form/step_form/info",
+            name: "step_form_info",
+            component: () =>
+              import(
+                /* webpackChunkName: "form" */ "../views/Form/StepForm/Step1.vue"
+              )
+          },
+          {
+            path: "/form/step_form/confirm",
+            name: "step_form_confirm",
+            component: () =>
+              import(
+                /* webpackChunkName: "form" */ "../views/Form/StepForm/Step2.vue"
+              )
+          },
+          {
+            path: "/form/step_form/result",
+            name: "step_form_result",
+            component: () =>
+              import(
+                /* webpackChunkName: "form" */ "../views/Form/StepForm/Step3.vue"
+              )
+          },
+          {
+            path: "/form/step_form",
+            redirect: "/form/step_form/info"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: "/user",
+    name: "User",
+    component: () =>
+      import(/*webpackChunkName:"layout"*/ "../layouts/UserLayout.vue"), // 方法3
+    // component: {render: h => h("router-view")},   // 方法2
+    // component: user_layout,    // 方法1
+    children: [
+      {
+        path: "/user",
+        redirect: "/user/login",
+      },
+      {
+        path: "/user/login",
+        name: "login",
+        component: () =>
+          import(/*webpackChunkName:"user"*/ "../views/user/Login.vue")
+      },
+      {
+        path: "/user/register",
+        name: "register",
+        component: () =>
+          import(/* webpackChunkName: "user" */ "../views/user/Register.vue")
+      }
+    ]
+  },
+  {
+    // 用于相应不存在的路由
+    path: "*",
+    name: "NotFound",
+    component: NotFound
   }
 ];
 
@@ -25,6 +158,15 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  NProgress.start();
+  next();
+});
+
+router.afterEach(() => {
+  NProgress.done();
 });
 
 export default router;
