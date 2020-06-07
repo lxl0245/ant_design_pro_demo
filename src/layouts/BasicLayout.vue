@@ -1,7 +1,5 @@
 <template>
-  <a-layout
-    id="components-layout-demo-custom-trigger"
-  >
+  <a-layout id="components-layout-demo-custom-trigger">
     <!-- ant design vue 的官方文档可以看到， layout 有一个 theme 属性，可以指定主题（只能 dark | light） -->
     <!-- v-model双向绑定属性； trigger=null表示隐藏默认设定，使用自定义触发器； collapsible 表示可以可折叠（Collapsibles）允许您隐藏或显示内容  -->
     <a-layout-sider
@@ -13,7 +11,7 @@
       :class="[`nav-theme-${nav_theme}`, `nav-theme-${nav_layout}`]"
     >
       <div class="logo">Ant Design Vue Pro</div>
-      <slider_menu></slider_menu>
+      <slider_menu :theme="nav_theme"></slider_menu>
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
@@ -98,7 +96,6 @@ export default {
   text-align: center;
   /* padding: 1px 1px 0 0; */
   overflow: hidden;
-
 }
 .nav-theme-dark {
   color: white;

@@ -11,18 +11,21 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
+    // name: "Home",
+    // meta: {icon:"", title:"XXX"},
     redirect: "/dashboard"
   },
   {
     path: "/dashboard",
     name: "dashboard",
+    meta: { icon: "dashboard", title: "仪表盘" },
     component: () =>
       import(/* webpackChunkName: "layout" */ "../layouts/BasicLayout.vue"),
     children: [
       {
         path: "/dashboard/workplace",
         name: "workplace",
+        meta: { icon: "", title: "工作台" },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/Workplace.vue"
@@ -31,6 +34,7 @@ const routes = [
       {
         path: "/dashboard/monitor",
         name: "moniter",
+        meta: { icon: "", title: "监控页" },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/Monitor.vue"
@@ -39,6 +43,7 @@ const routes = [
       {
         path: "/dashboard/analysis",
         name: "moniter",
+        meta: { icon: "", title: "分析页" },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/Analysis.vue"
@@ -47,6 +52,7 @@ const routes = [
       {
         path: "/dashboard/test_work",
         name: "test_work",
+        meta: { icon: "", title: "功能测试页" },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/TestWork.vue"
@@ -61,6 +67,7 @@ const routes = [
   {
     path: "/form",
     name: "form",
+    meta: { icon: "form", title: "表单页" },
     component: () => import(/* webpackChunkName: "layout" */ "../layouts/BasicLayout.vue"),
     // component: { render: h => h("router-view") },
     children: [
@@ -71,12 +78,14 @@ const routes = [
       {
         path: "/form/basic_form",
         name: "basic_form",
+        meta: { icon: "", title: "基础表单" },
         component: () =>
           import(/* webpackChunkName: "form" */ "../views/Form/BasicForm.vue")
       },
       {
         path: "/form/advanced_form",
         name: "advanced_form",
+        meta: { icon: "", title: "高级表单" },
         component: () =>
           import(
             /* webpackChunkName: "form" */ "../views/Form/AdvancedForm.vue"
@@ -85,6 +94,8 @@ const routes = [
       {
         path: "/form/step_form", // 分步表单
         name: "step_form",
+        meta: { icon: "", title: "分布表单" },
+        hideChildrenInMenu: true,
         component: () =>
           import(/* webpackChunkName: "form" */ "../views/Form/StepForm"),
         children: [
@@ -123,6 +134,7 @@ const routes = [
   {
     path: "/user",
     name: "User",
+    hideInMenu: true,
     component: () =>
       import(/*webpackChunkName:"layout"*/ "../layouts/UserLayout.vue"), // 方法3
     // component: {render: h => h("router-view")},   // 方法2
@@ -150,6 +162,7 @@ const routes = [
     // 用于相应不存在的路由
     path: "*",
     name: "NotFound",
+    hideInMenu: true,
     component: NotFound
   }
 ];
