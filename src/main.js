@@ -12,13 +12,17 @@ import store from "./store";
 
 // 如果需要使用多个组件，每个组件写上边的两行代码实在太繁琐
 // 可以借助 Babel 组件，在 babel.config.js 文件中进行配置后，就可以只写一行代码
-import { Button, Input } from "ant-design-vue";
+import { Button, Menu, Layout, Icon, Drawer, Radio } from "ant-design-vue";
 
 Vue.config.productionTip = false;
 
 // Vue.use(Antd);
 Vue.use(Button);
-Vue.use(Input);
+Vue.use(Menu);
+Vue.use(Layout);
+Vue.use(Icon);
+Vue.use(Drawer);
+Vue.use(Radio);
 
 new Vue({
   router,

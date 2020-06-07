@@ -161,7 +161,11 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  NProgress.start();
+  if (to.path != from.path) {
+    // 当源和目标URL相同，只有参数不同时，不显示进度条
+    // 例如：对于主题和风格的切换，不需要进度条
+    NProgress.start();
+  }
   next();
 });
 

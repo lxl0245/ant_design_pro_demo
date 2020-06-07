@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header">
     Header
   </div>
 </template>
@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style>
-
+.header {
+  float: right;
+  padding: 0 20px 0 0; /* 上右下左边距，为了与选择的布局中的header对齐*/
+}
 </style>
