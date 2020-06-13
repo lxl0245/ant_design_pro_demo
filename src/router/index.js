@@ -29,7 +29,7 @@ const routes = [
       {
         path: "/dashboard/workplace",
         name: "workplace",
-        meta: { icon: "", title: "工作台" },
+        meta: { icon: "", title: "工作台", authority: ["admin"] },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/Workplace.vue"
@@ -38,7 +38,7 @@ const routes = [
       {
         path: "/dashboard/monitor",
         name: "moniter",
-        meta: { icon: "", title: "监控页", authority: ["admin"] },
+        meta: { icon: "", title: "监控页", authority: ["admin"]},
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/Monitor.vue"
@@ -47,7 +47,7 @@ const routes = [
       {
         path: "/dashboard/analysis",
         name: "moniter",
-        meta: { icon: "", title: "分析页", authority: ["user"] },
+        meta: { icon: "", title: "分析页", authority: ["admin"] },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/Analysis.vue"
@@ -56,7 +56,7 @@ const routes = [
       {
         path: "/dashboard/test_work",
         name: "test_work",
-        meta: { icon: "", title: "功能测试页" },
+        meta: { icon: "", title: "功能测试页", authority: ["admin"] },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/TestWork.vue"
@@ -64,7 +64,7 @@ const routes = [
       },
       {
         path: "/dashboard",
-        redirect: "/dashboard/monitor"
+        redirect: "/dashboard/workplace"
       }
     ]
   },

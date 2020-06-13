@@ -15,7 +15,9 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
+        <!-- 只有管理员可以收缩菜单栏 -->
         <a-icon
+        v-auth="['admin']"
           class="trigger"
           :type="collapsed ? 'menu-unfold' : 'menu-fold'"
           @click="() => (collapsed = !collapsed)"
@@ -39,7 +41,10 @@
         <footer_component></footer_component>
       </a-layout-footer>
     </a-layout>
-    <setting_drawer></setting_drawer>
+    <Authorized :authority="['admin']">
+      <!-- 通过权限组件限制用户对Setting drawer的权限 -->
+      <setting_drawer></setting_drawer>
+    </Authorized>
   </a-layout>
 </template>
 <script>

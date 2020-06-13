@@ -14,6 +14,9 @@ import store from "./store";
 // 可以借助 Babel 组件，在 babel.config.js 文件中进行配置后，就可以只写一行代码
 import { Button, Menu, Layout, Icon, Drawer, Radio } from "ant-design-vue";
 
+import Authorized from "./components/Authorized";
+import Auth from "./directives/Auth";
+
 Vue.config.productionTip = false;
 
 // Vue.use(Antd);
@@ -23,6 +26,9 @@ Vue.use(Layout);
 Vue.use(Icon);
 Vue.use(Drawer);
 Vue.use(Radio);
+Vue.use(Auth);
+
+Vue.component("Authorized", Authorized);
 
 new Vue({
   router,
