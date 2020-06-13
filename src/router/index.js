@@ -1,8 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import NotFound from "../views/404.vue";
+import Forbidden from "../views/403.vue";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import { check, isLogin } from "../utils/auth";
+import findLast from "lodash/findLast";
+import { notification } from "ant-design-vue";
 
 // import user_layout from "../layouts/UserLayout.vue";
 
@@ -34,7 +38,7 @@ const routes = [
       {
         path: "/dashboard/monitor",
         name: "moniter",
-        meta: { icon: "", title: "监控页" },
+        meta: { icon: "", title: "监控页", authority: ["admin"] },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/Monitor.vue"
@@ -43,7 +47,7 @@ const routes = [
       {
         path: "/dashboard/analysis",
         name: "moniter",
-        meta: { icon: "", title: "分析页" },
+        meta: { icon: "", title: "分析页", authority: ["user"] },
         component: () =>
           import(
             /* webpackChunkName: "dashboard" */ "../views/Dashboard/Analysis.vue"
@@ -160,6 +164,13 @@ const routes = [
   },
   {
     // 用于相应不存在的路由
+    path: "/403",
+    name: "Forbidden",
+    hideInMenu: true,
+    component: Forbidden
+  },
+  {
+    // 用于相应不存在的路由
     path: "*",
     name: "NotFound",
     hideInMenu: true,
@@ -178,6 +189,28 @@ router.beforeEach((to, from, next) => {
     // 当源和目标URL相同，只有参数不同时，不显示进度条
     // 例如：对于主题和风格的切换，不需要进度条
     NProgress.start();
+  }
+  // 增加用户权限控制
+  const record = findLast(to.matched, record => record.meta.authority);
+  if (record && !check(record.meta.authority)) {
+    // 权限，但是不包含当前路由的权限
+    if (!isLogin() && to.path !== "/user/login") {
+      // 如果这个用户没有登录，且要访问的路由不是 /user/login 则，跳转到登录界面，让他先登录
+      next({
+        path: "/user/login"
+      });
+    } else if (to.path !== "/403") {
+      // 用于已经登录，则跳转到禁止访问页面 403
+      notification.error({
+        message: "403",
+        description: "无权访问该路径，请联系管理员."
+      });
+      next({
+        path: "/403"
+      });
+    }
+    // 因为用户没有权限，所以，也就会导致后边的 afterEach() 守卫不会执行，所以要结束
+    NProgress.done();
   }
   next();
 });
