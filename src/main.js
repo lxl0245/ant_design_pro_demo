@@ -37,6 +37,7 @@ Vue.use(Drawer);
 Vue.use(Radio);
 Vue.use(Form);
 Vue.use(Input);
+// Vue.use(Decorator);
 Vue.use(Auth);
 
 Vue.component("Authorized", Authorized);
