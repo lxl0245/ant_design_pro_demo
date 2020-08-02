@@ -163,6 +163,26 @@ const routes = [
     ]
   },
   {
+    path: "/eda",
+    name: "EDA",
+    meta: { icon: "line-chart", title: "EDA数据探索" },
+    component: () =>
+      import(/*webpackChunkName:"layout"*/ "../layouts/BasicLayout.vue"), // 方法3
+    children: [
+      {
+        path: "/eda",
+        redirect: "/eda/brief"
+      },
+      {
+        path: "/eda/brief",
+        name: "eda_brief",
+        meta: { icon: "", title: "EDA数据探索简介" },
+        component: () =>
+          import(/*webpackChunkName:"user"*/ "../views/Eda/Brief.vue")
+      }
+    ]
+  },
+  {
     // 用于相应不存在的路由
     path: "/403",
     name: "Forbidden",
@@ -179,7 +199,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  //mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL,
   routes
 });
